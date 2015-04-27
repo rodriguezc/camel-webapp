@@ -7,7 +7,7 @@ It easy serves static resources (html, javascript, etc) in addition of what came
 Static resources can be in the jar or externalized in the filesystem.
 
 URI Format
-webapp://uneAdresse[?options]
+webapp://someAddress[?options]
 
 
 | Option name            | Description                   | Required  | Default value
