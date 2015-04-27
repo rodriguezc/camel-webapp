@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:ctx="http://www.springframework.org/schema/context"
+       xmlns:camel="http://camel.apache.org/schema/spring"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+       http://www.springframework.org/schema/util    http://www.springframework.org/schema/util/spring-util.xsd
+       ">
+       <ctx:component-scan base-package="com.iperlon.camel.test"/>
+       <util:properties id="cfg" location="test.cfg"/>
+       <ctx:property-placeholder properties-ref="cfg"/>
+
+       <camel:camelContext id="camel-webapp" xmlns="http://camel.apache.org/schema/spring" >
+              <propertyPlaceholder id="properties" location="ref:cfg"/>
+              <route id="webapp">
+                     <from uri="webapp://http://localhost:8080/test?externalServices=externalService&amp;resourceClasses=com.iperlon.camel.test.ServiceInterface"/>
+                     <choice>
+                            <when>
+                                   <simple>${header.operationName} == "test2"</simple>
+                                   <process ref="serviceProcessor"/>
+                            </when>
+                     </choice>
+              </route>
+       </camel:camelContext>
+
+       <bean id="resourceResolver" class="com.iperlon.camel.webapp.FileSystemResourceResolver">
+              <constructor-arg value="src/test/resources/www"/>
+       </bean>
+
+</beans>
