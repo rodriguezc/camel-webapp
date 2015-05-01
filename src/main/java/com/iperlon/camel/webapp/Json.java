@@ -12,11 +12,11 @@ public class Json {
     private static ObjectMapper objectMapper = new ObjectMapper();
 
 
-    public static ObjectNode createObject() {
+    public static ObjectNode newObject() {
         return objectMapper.createObjectNode();
     }
 
-    public static ArrayNode createArray() {
+    public static ArrayNode newArray() {
         return objectMapper.createArrayNode();
     }
 }
