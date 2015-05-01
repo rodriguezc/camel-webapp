@@ -13,6 +13,7 @@ public class FSStaticResource extends StaticResource {
     private File file;
 
     public FSStaticResource(File file) {
+        this.file = file;
 
     }
     @Override
